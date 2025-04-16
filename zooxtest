@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>TeleOps Hotkey Simulator</title>
+
+  <style>
+
+    body {
+
+      font-family: sans-serif;
+
+      background-color: #1e1e1e;
+
+      color: #fff;
+
+      margin: 0;
+
+      padding: 0;
+
+    }
+
+    .status-bar {
+
+      background: #2c2c2c;
+
+      padding: 1rem;
+
+      display: flex;
+
+      gap: 1rem;
+
+      flex-wrap: wrap;
+
+      border-top: 2px solid #444;
+
+      position: fixed;
+
+      bottom: 0;
+
+      width: 100%;
+
+      z-index: 100;
+
+    }
+
+    .button-sim {
+
+      background: #333;
+
+      border: 1px solid #555;
+
+      padding: 0.5rem 1rem;
+
+      border-radius: 0.5rem;
+
+      cursor: pointer;
+
+    }
+
+    .button-sim.active {
+
+      background: #0099ff;
+
+      border-color: #00ccff;
+
+    }
+
+    #feedback {
+
+      position: fixed;
+
+      top: 1rem;
+
+      left: 50%;
+
+      transform: translateX(-50%);
+
+      background: #000000cc;
+
+      padding: 1rem 2rem;
+
+      border-radius: 1rem;
+
+      display: none;
+
+      font-size: 1.2rem;
+
+    }
+
+    #feedback.active {
+
+      display: block;
+
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <div id="feedback">Action Triggered</div>
+
+
+
+  <div class="status-bar">
+
+    <div class="button-sim" id="ToggleAuthority">Toggle Authority</div>
+
+    <div class="button-sim" id="LeaveConnectedScreen">Leave Connected Screen</div>
+
+    <div class="button-sim" id="NoGo">Trigger a NoGo</div>
+
+    <div class="button-sim" id="DevTools">Developer Tools</div>
+
+    <div class="button-sim" id="NoteTaker">Note-taker</div>
+
+    <div class="button-sim" id="SaveNote">Save Note</div>
+
+    <div class="button-sim" id="CancelNote">Cancel Note</div>
+
+    <div class="button-sim" id="CameraView">Toggle Camera View</div>
+
+    <div class="button-sim" id="ToLit">Add #to_lit</div>
+
+    <div class="button-sim" id="ToLag">Add #to_lag</div>
+
+    <div class="button-sim" id="HotKeyHelp">HotKey Help</div>
+
+    <div class="button-sim" id="ZFRModal">ZFR Modal</div>
+
+    <div class="button-sim" id="PathBuilder">Begin Pathbuilder</div>
+
+    <div class="button-sim" id="SendHold">Send Hold</div>
+
+    <div class="button-sim" id="SendRelease">Send Release</div>
+
+    <div class="button-sim" id="Pullover">Pullover</div>
+
+    <div class="button-sim" id="GoSlow">Toggle Go Slow</div>
+
+  </div>
+
+
+
+  <script>
+
+    const actionMap = {
+
+      "Z": "Toggle Authority",
+
+      "SHIFT+Z": "Toggle Authority",
+
+      "SHIFT+ENTER": "Save Note",
+
+      "SHIFT+ESCAPE": "Cancel Note",
+
+      "SHIFT+E": "Add #to_lag to Notetaker",
+
+      "SHIFT+SPACE": "Toggle Go Slow",
+
+      "ALT+A": "Open AIT Menu On Agents",
+
+      "ALT+S": "Send Release",
+
+      "ALT+H": "Send Hold",
+
+      "R": "Pullover",
+
+      "G": "Begin Pathbuilder",
+
+      "X": "Trigger a NoGo"
+
+    };
+
+
+
+    document.addEventListener("keydown", (e) => {
+
+      const keyCombo =
+
+        (e.shiftKey ? "SHIFT+" : "") +
+
+        (e.altKey ? "ALT+" : "") +
+
+        e.key.toUpperCase();
+
+      const action = actionMap[keyCombo];
+
+      if (action) triggerAction(action);
+
+    });
+
+
+
+    function triggerAction(name) {
+
+      const el = document.getElementById(name.replace(/\s+/g, ''));
+
+      const feedback = document.getElementById("feedback");
+
+      feedback.innerText = name;
+
+      feedback.classList.add("active");
+
+      if (el) {
+
+        el.classList.add("active");
+
+        setTimeout(() => el.classList.remove("active"), 1000);
+
+      }
+
+      setTimeout(() => feedback.classList.remove("active"), 1200);
+
+    }
+
+  </script>
+
+</body>
+
+</html>
